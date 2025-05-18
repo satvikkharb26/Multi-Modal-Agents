@@ -1,1 +1,139 @@
-markdown # 🧠 Multi-Agent Assistant System A sophisticated, modular **multi-agent system** that handles diverse queries via specialized AI agents. Built with **LangGraph**, **LangChain**, **FastAPI**, **Qdrant**, and **OpenAI**, this assistant is designed for flexibility, extensibility, and real-world use. --- ## 🗂️ File Structure ``` multi_agent_assistant/ ├── .env # Environment variables ├── config.py # Configuration loader ├── credentials.json # Google Calendar credentials ├── main.py # FastAPI entry point ├── requirements.txt # Project dependencies ├── agents/ # All agent implementations ├── chains/ # Agent graph orchestration logic ├── memory/ # Vector store and embeddings └── tools/ # External tool integrations (e.g., Google Calendar) ``` --- ## ⚙️ Core Components ### 1. API Layer (`main.py`) - FastAPI server with `/ask` endpoint - Initializes Qdrant vector store and LangGraph agent system - Returns structured responses with agent history ### 2. Agent Graph (`chains/agent_graph.py`) - State machine implementation using `langgraph` - Flow: `Planner → Specialized Agent → Memory → End` - Dynamically routes queries via a planning agent ### 3. Agents (`agents/`) - `PlannerAgent`: Determines query intent and routes accordingly - `ResponderAgent`: Answers general knowledge queries - `SchedulerAgent`: Manages Google Calendar events - `CoderAgent`: Responds to coding-related tasks - `MemoryAgent`: Handles long-term memory and context ### 4. Memory System (`memory/`) - `vectorstore.py`: Uses Qdrant for vector-based memory - `embeddings.py`: Supports OpenAI or HuggingFace embeddings ### 5. Tools (`tools/`) - `calendar_tool.py`: Google Calendar integration with authentication support --- ## 🚀 Setup Instructions ### 1. Clone the Repo ```bash git clone https://github.com/your-username/multi_agent_assistant.git cd multi_agent_assistant ``` ### 2. Create Virtual Environment ```bash python -m venv venv source venv/bin/activate # On Unix or MacOS .\venv\Scripts\activate # On Windows ``` ### 3. Install Dependencies ```bash pip install -r requirements.txt ``` ### 4. Configure Environment Variables Create a `.env` file with the following: ```env OPENAI_API_KEY=your_openai_key GPT_SIMPLE_MODEL=gpt-3.5-turbo GPT_CODE_MODEL=gpt-4 EMBEDDING_MODEL=openai QDRANT_HOST=http://localhost:6333 QDRANT_COLLECTION=conversation_memory GOOGLE_CALENDAR_CREDENTIALS_PATH=credentials.json API_HOST=0.0.0.0 API_PORT=8000 MEMORY_TOP_K=3 ``` --- ## 🔌 External Services Required - ✅ [Qdrant](https://qdrant.tech) vector database (self-hosted or cloud) - ✅ OpenAI API access - ✅ Google Calendar API (OAuth2 with `credentials.json`) --- ## 🔄 System Flow ```mermaid flowchart LR A[User Query] --> B[FastAPI Server (/ask)] B --> C[PlannerAgent] C -->|Intent Routing| D[Specialized Agent] D --> E[MemoryAgent] E --> F[Response + Store in Qdrant] ``` ### Agent Roles | Agent | Role | |----------------|------------------------------------| | PlannerAgent | Determines intent and dispatches | | ResponderAgent | Handles general knowledge | | CoderAgent | Answers coding-related queries | | SchedulerAgent | Manages calendar tasks | | MemoryAgent | Adds contextual memory | --- ## ▶️ Running the System ### 1. Start Qdrant ```bash docker run -p 6333:6333 qdrant/qdrant ``` ### 2. Run the FastAPI Server ```bash python main.py ``` Your server will be accessible at: [http://localhost:8000](http://localhost:8000) --- ## 🔐 Security Notes - Keep `.env` and `credentials.json` **private** - Use `.gitignore` to prevent sensitive file uploads - Add authentication to `/ask` endpoint for production use --- ## 📦 Key Dependencies | Package | Purpose | |---------------------------|------------------------------------------| | `fastapi` | Web server framework | | `langgraph` | Multi-agent state management | | `langchain` | LLM orchestration and tooling | | `qdrant-client` | Vector store for memory | | `google-api-python-client`| Calendar integration | See `requirements.txt` for the full list. --- ## 🧩 Extensibility The architecture is modular. To add a new agent: 1. Create a new agent class under `agents/` 2. Add its logic in `chains/agent_graph.py` 3. Register it in the planner’s routing logic --- ## 💡 Example Use Cases - Intelligent query answering - Auto-coding assistant - Smart calendar manager - Personalized assistant with memory --- ## 📬 Contributions & Feedback Feel free to open issues or pull requests. Let’s make AI assistants smarter, together. 
+# Multi-Agent Assistant System
+
+A sophisticated multi-agent system that handles various types of queries through specialized agents.
+
+### File Structure
+
+multi\_agent\_assistant/
+├── .env                 # Environment variables and configuration
+├── config.py           # Configuration loading and constants
+├── credentials.json    # Google Calendar API credentials
+├── main.py            # FastAPI server entry point
+├── requirements.txt    # Project dependencies
+├── agents/            # Individual agent implementations
+├── chains/            # Agent orchestration
+├── memory/            # Vector storage and embeddings
+└── tools/             # External service integrations
+
+### Core Components
+
+1. API Layer (main.py)
+
+* Implements a FastAPI server that handles incoming queries
+* Initializes the vector store and agent graph
+* Processes requests through /ask endpoint
+* Returns responses with used agents
+
+2. Agent Graph (chains/agent\_graph.py)
+
+* Orchestrates the flow between different agents
+* Implements a state machine using langgraph
+* Flow: Planner → Specific Agent → Memory → End
+* Manages the state transitions and agent coordination
+
+3. Agents
+
+* PlannerAgent: Routes queries to appropriate agents
+* ResponderAgent: Handles general queries
+* SchedulerAgent: Manages calendar events
+* CoderAgent: Handles programming-related queries
+* MemoryAgent: Manages conversation history
+
+6. Memory System
+
+* vectorstore.py: Implements Qdrant vector storage
+* embeddings.py: Handles text embeddings (OpenAI/HuggingFace)
+
+7. Tools
+
+* calendar\_tool.py: Google Calendar integration
+
+### Setup Requirements
+
+1. Environment Setup
+
+python -m venv venv
+source venv/bin/activate  # Unix
+.\venv\Scripts\activate   # Windows
+
+2. Install Dependencies
+
+pip install -r requirements.txt
+
+3. Required Environment Variables
+
+OPENAI\_API\_KEY=your\_key
+GPT\_SIMPLE\_MODEL=gpt-3.5-turbo
+GPT\_CODE\_MODEL=gpt-4
+EMBEDDING\_MODEL=openai
+QDRANT\_HOST=[http://localhost:6333](http://localhost:6333)
+QDRANT\_COLLECTION=conversation\_memory
+GOOGLE\_CALENDAR\_CREDENTIALS\_PATH=path/to/credentials.json
+API\_HOST=0.0.0.0
+API\_PORT=8000
+MEMORY\_TOP\_K=3
+
+4.External Services
+
+* Qdrant vector database (running locally or remote)
+
+* OpenAI API access
+
+* Google Calendar API credentials
+
+## Flow Description
+
+1. Query Entry
+
+* User sends query to /ask endpoint
+* Request is processed by FastAPI server
+* Planning Phase
+
+2. Planning Phase
+
+* PlannerAgent analyzes query intent
+* Retrieves relevant context from memory
+* Routes to appropriate specialized agent
+
+3. Execution Phase
+
+* Specialized agent processes query:
+* ResponderAgent: General queries
+* SchedulerAgent: Calendar management
+* CoderAgent: Code-related queries
+
+4. Memory Management
+
+* Interaction stored in vector database
+* Used for context in future queries
+
+## Running the System
+
+Start Qdrant (if running locally)
+docker run -p 6333:6333 qdrant/qdrant
+
+Start the API server
+python main.py
+
+The server will be available at [http://localhost:8000](http://localhost:8000)
+
+## Security Notes
+
+* Keep API keys and credentials secure
+
+* Don't commit .env or credentials.json
+
+* Use appropriate access controls for the API
+
+## Dependencies
+
+### Key packages and their purposes:
+
+* fastapi: API server framework
+* langchain: LLM interaction and chains
+* qdrant-client: Vector database
+* langgraph: Agent orchestration
+* google-api-python-client: Calendar integration
+* See requirements.txt for full list
+  The architecture is designed to be modular and extensible, allowing for easy addition of new agents and capabilities.
+
