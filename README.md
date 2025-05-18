@@ -4,17 +4,7 @@ A sophisticated multi-agent system that handles various types of queries through
 
 ### File Structure
 
-multi\_agent\_assistant/
-├── .env                 # Environment variables and configuration
-├── config.py           # Configuration loading and constants
-├── credentials.json    # Google Calendar API credentials
-├── main.py            # FastAPI server entry point
-├── requirements.txt    # Project dependencies
-├── agents/            # Individual agent implementations
-├── chains/            # Agent orchestration
-├── memory/            # Vector storage and embeddings
-└── tools/             # External service integrations
-
+<pre lang="markdown"> ```none multi_agent_assistant/ ├── .env # Environment variables and configuration ├── config.py # Configuration loading and constants ├── credentials.json # Google Calendar API credentials ├── main.py # FastAPI server entry point ├── requirements.txt # Project dependencies ├── agents/ # Individual agent implementations ├── chains/ # Agent orchestration ├── memory/ # Vector storage and embeddings └── tools/ # External service integrations ``` </pre>
 ### Core Components
 
 1. API Layer (main.py)
