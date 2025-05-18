@@ -55,17 +55,17 @@ multi_agent_assistant/
 ### Setup Requirements
 
 1. Environment Setup
-
+``` none
 python -m venv venv
 source venv/bin/activate  # Unix
 .\venv\Scripts\activate   # Windows
-
+```
 2. Install Dependencies
-
+```
 pip install -r requirements.txt
-
+```
 3. Required Environment Variables
-
+```
 OPENAI\_API\_KEY=your\_key
 GPT\_SIMPLE\_MODEL=gpt-3.5-turbo
 GPT\_CODE\_MODEL=gpt-4
@@ -76,7 +76,7 @@ GOOGLE\_CALENDAR\_CREDENTIALS\_PATH=path/to/credentials.json
 API\_HOST=0.0.0.0
 API\_PORT=8000
 MEMORY\_TOP\_K=3
-
+```
 4.External Services
 
 * Qdrant vector database (running locally or remote)
@@ -112,13 +112,13 @@ MEMORY\_TOP\_K=3
 * Used for context in future queries
 
 ## Running the System
-
-Start Qdrant (if running locally)
+```
+#Start Qdrant (if running locally)
 docker run -p 6333:6333 qdrant/qdrant
 
-Start the API server
+#Start the API server
 python main.py
-
+```
 The server will be available at [http://localhost:8000](http://localhost:8000)
 
 ## Security Notes
