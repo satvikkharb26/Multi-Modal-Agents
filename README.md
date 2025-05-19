@@ -69,16 +69,16 @@ pip install -r requirements.txt
 ```
 3. Required Environment Variables
 ```
-OPENAI\_API\_KEY=your\_key
-GPT\_SIMPLE\_MODEL=gpt-3.5-turbo
-GPT\_CODE\_MODEL=gpt-4
-EMBEDDING\_MODEL=openai
-QDRANT\_HOST=[http://localhost:6333](http://localhost:6333)
-QDRANT\_COLLECTION=conversation\_memory
-GOOGLE\_CALENDAR\_CREDENTIALS\_PATH=path/to/credentials.json
-API\_HOST=0.0.0.0
-API\_PORT=8000
-MEMORY\_TOP\_K=3
+OPENAI_API_KEY=your_key
+GPT_SIMPLE_MODEL=gpt-3.5-turbo
+GPT_CODE_MODEL=gpt-4
+EMBEDDING_MODEL=openai
+QDRANT_HOST=[http://localhost:6333](http://localhost:6333)
+QDRANT_COLLECTION=conversation_memory
+GOOGLE_CALENDAR_CREDENTIALS_PATH=path/to/credentials.json
+API_HOST=0.0.0.0
+API_PORT=8000
+MEMORY_TOP_K=3
 ```
 4.External Services
 
